@@ -14,18 +14,18 @@ class MongoConnect {
   }
 
   connect() {
-    if (!MongoLib.connection) {
-      MongoLib.connection = new Promise((resolve, reject) => {
+    if (!MongoConnect.connection) {
+      MongoConnect.connection = new Promise((resolve, reject) => {
         this.client.connect(err => {
           if (err) {
             reject(err);
           }
-          console.log('Connected succesfully to mongo');
+          console.log('Connected successfully to mongo');
           resolve(this.client.db(this.dbName));
         });
       });
     }
-    return MongoLib.connection;
+    return MongoConnect.connection;
   }
 }
 
