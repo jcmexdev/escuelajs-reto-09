@@ -1,8 +1,5 @@
 const express = require('express');
 const app = express();
-const MongoConnect = require('./lib/mongo');
-const DB = new MongoConnect();
-
 const { config } = require('./config');
 const platziStore = require('./routes');
 
@@ -19,5 +16,4 @@ app.listen(config.port, err => {
     return;
   }
   console.log(`Listening http://localhost:${config.port}`);
-  DB.connect();
 });
