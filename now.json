@@ -1,0 +1,12 @@
+{
+  "name": "platzi-java-script-school",
+  "version": 2,
+  "builds": [{ "src": "src/index.js", "use": "@now/node" }],
+  "routes": [{ "src": "/(.*)", "dest": "/src/index.js" }],
+  "env": {
+    "DB_USER": "@reto_db_user",
+    "DB_PASSWORD": "@reto_db_password",
+    "DB_HOST": "@reto_db_host",
+    "DB_NAME": "@reto_db_name"
+  }
+}

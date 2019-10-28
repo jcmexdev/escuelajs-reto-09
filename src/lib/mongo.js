@@ -28,22 +28,68 @@ class MongoConnect {
     return MongoConnect.connection;
   }
 
-  seeder = (collection, data) => {
+  seeder(collection, data) {
     return this.connect()
       .then(db => {
         return db.collection(collection).insertMany(data);
       })
       .then(result => result.insertedIds);
-  };
+  }
 
-  getAll = (collection, query) => {
+  /**
+   * Get all the documents in the collection
+   */
+  getAll(collection, query) {
     return this.connect().then(db => {
       return db
         .collection(collection)
         .find()
         .toArray();
     });
-  };
+  }
+
+  /**
+   * Get only one document in the collection by id
+   */
+  get(collection, id) {
+    return this.connect().then(db => {
+      return db.collection(collection).findOne({ _id: ObjectId(id) });
+    });
+  }
+
+  /**
+   * Create new document
+   */
+  create(collection, data) {
+    return this.connect()
+      .then(db => {
+        return db.collection(collection).insertOne(data);
+      })
+      .then(result => result.insertedId);
+  }
+  /**
+   * Update (or create) a document by id
+   */
+  update(collection, id, data) {
+    return this.connect()
+      .then(db => {
+        return db
+          .collection(collection)
+          .updateOne({ _id: ObjectId(id) }, { $set: data }, { upsert: true });
+      })
+      .then(result => result.upsertedId || id);
+  }
+
+  /**
+   * Delete one document of collection by id
+   */
+  delete(collection, id) {
+    return this.connect()
+      .then(db => {
+        return db.collection(collection).deleteOne({ _id: ObjectId(id) });
+      })
+      .then(() => id);
+  }
 }
 
 module.exports = MongoConnect;

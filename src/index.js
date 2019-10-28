@@ -3,6 +3,8 @@ const app = express();
 const { config } = require('./config');
 const platziStore = require('./routes');
 
+app.use(express.json());
+
 app.get('/', (req, res) => {
   let userInfo = req.header('user-agent');
   res.send(`UserInfo: ${userInfo}`);
